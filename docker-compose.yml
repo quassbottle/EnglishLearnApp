@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+  employees.application:
+    image: engishapp.api
+    build:
+      context: .
+      dockerfile: EnglishApplication.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      - database
+    networks:
+      - backend
+    restart: always
+    ports:
+      - "80:8080"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 512M
+  
+  database:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: 'english'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'english'
+    networks:
+      - backend
+    ports:
+      - "5430:5432"
+    volumes:
+      - database-pg:/var/lib/postgresql/data
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  database-pg:
