@@ -5,20 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishApplication.Controllers.V1;
 
-public class AuthController(IAccountService accountService) : ApiControllerV1
+public class AuthController(IAuthenticationService authService) : ApiControllerV1
 {
-    [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterRequest request)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        var result = await accountService.RegisterAsync(request);
+        var result = await authService.LoginAsync(request);
 
         return Ok(result);
     }
     
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginRequest request)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var result = await accountService.RegisterAsync(request);
+        var result = await authService.RegisterAsync(request);
 
         return Ok(result);
     }

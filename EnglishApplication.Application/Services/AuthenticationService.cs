@@ -40,7 +40,7 @@ public class AuthenticationService(
     {
         var candidate = await accountService.GetByEmailAsync(request.Email);
 
-        if (!passwordHasher.Verify(candidate.HashedPassword, request.Password))
+        if (!passwordHasher.Verify(request.Password, candidate.HashedPassword))
         {
             throw new Exception("bad password"); // todo: create domain specified exception
         }
