@@ -1,6 +1,8 @@
 using System.Data;
+using EnglishApplication.Domain.Repositories;
 using EnglishApplication.Infrastructure.Persistence.Context;
 using EnglishApplication.Infrastructure.Persistence.Factories;
+using EnglishApplication.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,5 +23,7 @@ public static class InfrastructureHostExtensions
         services.AddSingleton<IDbConnectionFactory, DefaultConnectionFactory>();
         
         services.AddDbContext<DefaultDataContext>();
+
+        services.AddScoped<IAccountRepository, AccountRepository>();
     }
 }

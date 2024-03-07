@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using EnglishApplication.Domain.Aggregate;
 
 namespace EnglishApplication.Domain.Repositories;
@@ -10,4 +11,5 @@ public interface IAccountRepository
     Task RemoveAsync(int id);
     Task<bool> ExistsByEmailAsync(string email);
     Task<bool> ExistsByIdAsync(int id);
+    Task<Account> FirstOrDefaultAsync(Expression<Func<Account, bool>> predicate);
 }

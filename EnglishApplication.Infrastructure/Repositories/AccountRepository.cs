@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using EnglishApplication.Domain.Aggregate;
 using EnglishApplication.Domain.Exceptions.Account;
 using EnglishApplication.Domain.Repositories;
@@ -71,5 +72,11 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
     {
         var candidate = await context.Accounts.FindAsync(id);
         return candidate is not null;
+    }
+
+    public async Task<Account> FirstOrDefaultAsync(Expression<Func<Account, bool>> predicate)
+    {
+        var candidate = await context.Accounts.FirstOrDefaultAsync(predicate);
+        return candidate;
     }
 }

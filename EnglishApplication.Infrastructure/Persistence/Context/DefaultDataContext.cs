@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace EnglishApplication.Infrastructure.Persistence.Context;
 
-// стратегия + фабрика
 public class DefaultDataContext(IDbConnectionFactory factory) : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
