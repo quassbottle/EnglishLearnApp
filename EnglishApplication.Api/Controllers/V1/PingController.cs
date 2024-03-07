@@ -1,13 +1,13 @@
-using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Controllers.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EnglishApplication.Controllers;
+namespace EnglishApplication.Controllers.V1;
 
 public class PingController(IAccountService accountService) : ApiControllerV1
 {
+    [AllowAnonymous]
     [HttpGet("anon")]
     public async Task<IActionResult> Ping()
     {
@@ -15,7 +15,6 @@ public class PingController(IAccountService accountService) : ApiControllerV1
     }
 
     [HttpGet("auth")]
-    [Authorize]
     public async Task<IActionResult> PingAuth()
     {
         return Ok("Pong!");

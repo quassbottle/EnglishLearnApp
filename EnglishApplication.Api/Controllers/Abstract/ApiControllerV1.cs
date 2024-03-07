@@ -4,6 +4,6 @@ namespace EnglishApplication.Controllers.Abstract;
 
 [ApiController]
 [Route("v1/[controller]")]
-public abstract class ApiControllerV1 : Controller
+public abstract class ApiControllerV1 : BaseAuthController
 {
 }

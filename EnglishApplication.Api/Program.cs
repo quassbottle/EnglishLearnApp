@@ -13,12 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerWithAuth();
 
-builder.Services.AddJwtSettings();
+builder.Services.AddAuthModule();
+builder.Services.AddJwtAuth(builder.Configuration);
 
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 
-    
 var app = builder.Build();
 
 app.MigrateDatabase<DefaultDataContext>();
@@ -26,7 +26,6 @@ app.MigrateDatabase<DefaultDataContext>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

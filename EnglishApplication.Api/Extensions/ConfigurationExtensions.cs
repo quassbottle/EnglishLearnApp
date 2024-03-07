@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,6 +7,28 @@ namespace EnglishApplication.Extensions;
 
 public static class ConfigurationExtensions
 {
+    public static void AddJwtAuth(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthorization();
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                var authSettings = configuration.GetSection("Jwt");
+                options.ClaimsIssuer = authSettings["Issuer"];
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = authSettings["Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = authSettings["Audience"],
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings["Key"])),
+                    ValidateIssuerSigningKey = true
+                };
+            });
+    }
+    
     public static void AddSwaggerWithAuth(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>

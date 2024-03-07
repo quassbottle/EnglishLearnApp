@@ -1,10 +1,12 @@
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Controllers.Abstract;
 using EnglishApplication.Models.Auth.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishApplication.Controllers.V1;
 
+[AllowAnonymous]
 public class AuthController(IAuthenticationService authService) : ApiControllerV1
 {
     [HttpPost("login")]
