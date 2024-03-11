@@ -17,5 +17,11 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
             .HasOne(e => e.UserInfo)
             .WithOne(e => e.Account)
             .HasForeignKey<UserInfo>(e => e.AccountId);
+        
+        builder
+            .HasOne(e => e.RefreshToken)
+            .WithOne(e => e.Account)
+            .HasForeignKey<RefreshToken>(e => e.AccountId);
+
     }
 }

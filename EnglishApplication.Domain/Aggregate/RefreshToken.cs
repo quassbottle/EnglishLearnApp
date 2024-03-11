@@ -6,6 +6,6 @@ public class RefreshToken
     
     public string Token { get; set; }
     
-    public Account Owner { get; set; }
-    public int OwnerId { get; set; }
+    public Account Account { get; set; }
+    public int AccountId { get; set; }
 }

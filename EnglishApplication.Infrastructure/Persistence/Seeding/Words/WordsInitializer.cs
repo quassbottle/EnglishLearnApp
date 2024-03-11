@@ -1,29 +1,15 @@
-using System.Data;
-using System.Data.Common;
-using EnglishApplication.Domain.Aggregate;
-using EnglishApplication.Infrastructure.Persistence.Configuration;
-using EnglishApplication.Infrastructure.Persistence.Factories;
-using EnglishApplication.Infrastructure.Persistence.Seeding;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EnglishApplication.Infrastructure.Persistence.Context;
+namespace EnglishApplication.Infrastructure.Persistence.Seeding;
 
-public class DefaultDataContext(IDbConnectionFactory factory) : DbContext
+public static class WordsInitializer
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public static void SeedWords(this EntityTypeBuilder<Word> context)
     {
-        optionsBuilder.UseNpgsql(factory.CreateAsync().GetAwaiter().GetResult());
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfiguration(new AccountConfiguration());
-        //modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new LearnedWordConfiguration());
-        modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
-        modelBuilder.ApplyConfiguration(new WordConfiguration());
         
+        /*
         modelBuilder.Entity<Word>().HasData(new List<Word>()
             {
             new() { Id = 1, Value = "word", Translation = "слово" },
@@ -130,12 +116,6 @@ public class DefaultDataContext(IDbConnectionFactory factory) : DbContext
             new() { Id = 98, Value = "post office", Translation = "почта" },
             new() { Id = 99, Value = "library", Translation = "библиотека" },
             new() { Id = 100, Value = "restaurant", Translation = "ресторан" }
-        });
+        });*/
     }
-    
-    public DbSet<Account> Accounts { get; set; }
-    //public DbSet<Category> Categories { get; set; }
-    public DbSet<LearnedWord> LearnedWords { get; set; }
-    public DbSet<UserInfo> UserInfos { get; set; }
-    public DbSet<Word> Words { get; set; }
 }

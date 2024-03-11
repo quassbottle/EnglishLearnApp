@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishApplication.Controllers.V1;
 
-public class PingController(IAccountService accountService) : ApiControllerV1
+public class PingController : ApiControllerV1
 {
     [AllowAnonymous]
     [HttpGet("anon")]

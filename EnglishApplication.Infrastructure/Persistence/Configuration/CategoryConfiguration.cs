@@ -13,9 +13,10 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).ValueGeneratedOnAdd();
 
+        /*
         builder
             .HasMany(c => c.Words)
             .WithOne(w => w.Category)
-            .HasForeignKey(w => w.CategoryId);
+            .HasForeignKey(w => w.CategoryId);*/
     }
 }

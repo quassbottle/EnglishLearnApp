@@ -9,4 +9,7 @@ public class Account
     
     public UserInfo UserInfo { get; set; }
     public int UserInfoId { get; set; }
+    
+    public RefreshToken RefreshToken { get; set; }
+    public int RefreshTokenId { get; set; }
 }

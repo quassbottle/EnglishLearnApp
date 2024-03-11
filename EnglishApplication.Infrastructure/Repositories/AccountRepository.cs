@@ -11,7 +11,9 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
 {
     public async Task<Account> GetByIdAsync(int id)
     {
-        var candidate = await context.Accounts.FindAsync(id);
+        var candidate = await context.Accounts
+            .Include(a => a.RefreshToken)
+            .FirstOrDefaultAsync(a => a.Id == id);
         
         if (candidate is null)
         {
@@ -76,7 +78,9 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
 
     public async Task<Account> FirstOrDefaultAsync(Expression<Func<Account, bool>> predicate)
     {
-        var candidate = await context.Accounts.FirstOrDefaultAsync(predicate);
+        var candidate = await context.Accounts
+            .Include(a => a.RefreshToken)
+            .FirstOrDefaultAsync(predicate);
         return candidate;
     }
 }
