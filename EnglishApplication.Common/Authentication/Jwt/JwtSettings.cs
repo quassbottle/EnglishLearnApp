@@ -1,7 +1,6 @@
 using System.Text;
 using EnglishApplication.Common.Authentication.Jwt.Interfaces;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace EnglishApplication.Common.Authentication.Jwt;
 

@@ -1,15 +1,15 @@
 ﻿using EnglishApplication.Domain.Aggregate;
 using EnglishApplication.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishApplication.Infrastructure.Persistence.Seeding;
 
 public static class WordsInitializer
 {
-    public static void SeedWords(this EntityTypeBuilder<Word> context)
+    public static void SeedWords(this ModelBuilder modelBuilder)
     {
         
-        /*
         modelBuilder.Entity<Word>().HasData(new List<Word>()
             {
             new() { Id = 1, Value = "word", Translation = "слово" },
@@ -22,7 +22,6 @@ public static class WordsInitializer
             new() { Id = 8, Value = "sky", Translation = "небо" },
             new() { Id = 9, Value = "sun", Translation = "солнце" },
             new() { Id = 10, Value = "moon", Translation = "луна" },
-            // Продолжение списка слов
             new() { Id = 11, Value = "apple", Translation = "яблоко" },
             new() { Id = 12, Value = "banana", Translation = "банан" },
             new() { Id = 13, Value = "car", Translation = "машина" },
@@ -33,7 +32,6 @@ public static class WordsInitializer
             new() { Id = 18, Value = "window", Translation = "окно" },
             new() { Id = 19, Value = "door", Translation = "дверь" },
             new() { Id = 20, Value = "phone", Translation = "телефон" },
-            // Продолжение списка слов
             new() { Id = 21, Value = "tablet", Translation = "планшет" },
             new() { Id = 22, Value = "chair", Translation = "стул" },
             new() { Id = 23, Value = "lamp", Translation = "лампа" },
@@ -44,7 +42,6 @@ public static class WordsInitializer
             new() { Id = 28, Value = "cup", Translation = "чашка" },
             new() { Id = 29, Value = "spoon", Translation = "ложка" },
             new() { Id = 30, Value = "fork", Translation = "вилка" },
-            // Продолжение списка слов
             new() { Id = 31, Value = "knife", Translation = "нож" },
             new() { Id = 32, Value = "plate", Translation = "тарелка" },
             new() { Id = 33, Value = "television", Translation = "телевизор" },
@@ -55,7 +52,6 @@ public static class WordsInitializer
             new() { Id = 38, Value = "speaker", Translation = "колонка" },
             new() { Id = 39, Value = "keyboard", Translation = "клавиатура" },
             new() { Id = 40, Value = "mouse", Translation = "мышь" },
-            // Продолжение списка слов
             new() { Id = 41, Value = "tablecloth", Translation = "скатерть" },
             new() { Id = 42, Value = "napkin", Translation = "салфетка" },
             new() { Id = 43, Value = "plate", Translation = "тарелка" },
@@ -116,6 +112,6 @@ public static class WordsInitializer
             new() { Id = 98, Value = "post office", Translation = "почта" },
             new() { Id = 99, Value = "library", Translation = "библиотека" },
             new() { Id = 100, Value = "restaurant", Translation = "ресторан" }
-        });*/
+        });
     }
 }

@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Common.Authentication.Hash.Interfaces;
