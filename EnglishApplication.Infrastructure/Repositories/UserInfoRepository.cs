@@ -1,4 +1,4 @@
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 using EnglishApplication.Domain.Exceptions.UserInfo;
 using EnglishApplication.Domain.Repositories;
 using EnglishApplication.Infrastructure.Persistence.Context;
@@ -16,7 +16,10 @@ public class UserInfoRepository(DefaultDataContext context) : IUserInfoRepositor
 
     public async Task<bool> ExistsByIdAsync(int id)
     {
-        var candidate = await context.UserInfos.FindAsync(id);
+        var candidate = await context.UserInfos
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ui => ui.Id == id);
+        
         return candidate is not null;
     }
 
@@ -37,19 +40,19 @@ public class UserInfoRepository(DefaultDataContext context) : IUserInfoRepositor
 
     public async Task<UserInfo> GetByIdAsync(int id)
     {
-        var candidate = await context.UserInfos.FindAsync(id);
+        var candidate = await context.UserInfos
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ui => ui.Id == id);
 
-        if (candidate is null)
-        {
-            throw UserNotFoundException.WithSuchId(id);
-        }
-        
         return candidate;
     }
 
     public async Task<UserInfo> GetByUsernameAsync(string username)
     {
-        var candidate = await context.UserInfos.FirstOrDefaultAsync(ui => ui.Username == username);
+        var candidate = await context.UserInfos
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ui => ui.Username == username);
+        
         return candidate;
     }
 }

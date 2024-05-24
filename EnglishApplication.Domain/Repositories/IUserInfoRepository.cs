@@ -1,4 +1,4 @@
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 
 namespace EnglishApplication.Domain.Repositories;
 

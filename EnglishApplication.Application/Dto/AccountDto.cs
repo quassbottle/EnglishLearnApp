@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 
 namespace EnglishApplication.Application.Dto;
 

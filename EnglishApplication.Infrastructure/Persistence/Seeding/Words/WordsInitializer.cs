@@ -1,9 +1,7 @@
-﻿using EnglishApplication.Domain.Aggregate;
-using EnglishApplication.Infrastructure.Persistence.Context;
+﻿using EnglishApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EnglishApplication.Infrastructure.Persistence.Seeding;
+namespace EnglishApplication.Infrastructure.Persistence.Seeding.Words;
 
 public static class WordsInitializer
 {

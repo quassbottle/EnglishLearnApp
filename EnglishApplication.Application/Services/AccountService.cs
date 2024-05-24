@@ -2,13 +2,13 @@ using System.Threading.Tasks;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Dto.Mappers;
 using EnglishApplication.Application.Services.Interfaces;
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 using EnglishApplication.Domain.Exceptions.Account;
 using EnglishApplication.Domain.Repositories;
 
 namespace EnglishApplication.Application.Services;
 
-public class AccountService(IAccountRepository repository) : IAccountService
+public class AccountService(IAccountRepository repository, IJwtTokenService jwtTokenService) : IAccountService
 {
     public async Task<AccountDto> GetByEmailAsync(string email)
     {

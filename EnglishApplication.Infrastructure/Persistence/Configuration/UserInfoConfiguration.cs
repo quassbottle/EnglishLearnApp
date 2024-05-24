@@ -1,4 +1,4 @@
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,5 +14,9 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
         builder.Property(e => e.Id).ValueGeneratedOnAdd();
 
         builder.HasAlternateKey(e => e.Username);
+
+        builder
+            .HasMany(e => e.Sessions)
+            .WithOne(e => e.UserInfo);
     }
 }

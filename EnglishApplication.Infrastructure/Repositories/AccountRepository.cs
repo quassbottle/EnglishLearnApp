@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 using EnglishApplication.Domain.Exceptions.Account;
 using EnglishApplication.Domain.Repositories;
 using EnglishApplication.Infrastructure.Persistence.Context;
@@ -12,7 +12,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
     public async Task<Account> GetByIdAsync(int id)
     {
         var candidate = await context.Accounts
-            .Include(a => a.RefreshToken)
+            .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == id);
         
         if (candidate is null)
@@ -66,21 +66,26 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
 
     public async Task<bool> ExistsByEmailAsync(string email)
     {
-        var candidate = await context.Accounts.FirstOrDefaultAsync(account => account.Email == email);
+        var candidate = await context.Accounts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(account => account.Email == email);
+        
         return candidate is not null;
     }
 
     public async Task<bool> ExistsByIdAsync(int id)
     {
-        var candidate = await context.Accounts.FindAsync(id);
+        var candidate = await context.Accounts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(account => account.Id == id);
+        
         return candidate is not null;
     }
 
     public async Task<Account> FirstOrDefaultAsync(Expression<Func<Account, bool>> predicate)
     {
-        var candidate = await context.Accounts
-            .Include(a => a.RefreshToken)
+        return await context.Accounts
+            .AsNoTracking()
             .FirstOrDefaultAsync(predicate);
-        return candidate;
     }
 }

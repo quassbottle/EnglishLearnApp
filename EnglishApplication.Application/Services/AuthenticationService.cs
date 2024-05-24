@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Common.Authentication.Hash.Interfaces;
-using EnglishApplication.Common.Authentication.Jwt;
-using EnglishApplication.Domain.Aggregate;
-using EnglishApplication.Domain.Repositories;
 using EnglishApplication.Models.Auth.Request;
-using EnglishApplication.Models.Auth.Response;
 
 namespace EnglishApplication.Application.Services;
 

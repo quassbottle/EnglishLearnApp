@@ -1,4 +1,4 @@
-using EnglishApplication.Domain.Aggregate;
+using EnglishApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,4 @@
-namespace EnglishApplication.Domain.Aggregate;
+namespace EnglishApplication.Domain.Entities;
 
 public class UserInfo
 {
@@ -9,5 +9,5 @@ public class UserInfo
     public Account Account { get; set; }
     public int AccountId { get; set; }
     
-    public ICollection<LearnedWord> LearnedWords { get; set; }
+    public ICollection<Session> Sessions { get; set; }
 }
