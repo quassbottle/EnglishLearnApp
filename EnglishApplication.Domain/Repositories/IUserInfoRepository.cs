@@ -6,7 +6,7 @@ public interface IUserInfoRepository
 {
     Task<bool> ExistsByUsernameAsync(string username);
     Task<bool> ExistsByIdAsync(int id);
-    Task<UserInfo> UpdateAsync(UserInfo userInfo, int id);
-    Task<UserInfo> GetByIdAsync(int id);
-    Task<UserInfo> GetByUsernameAsync(string username);
+    Task<DbUserInfo> UpdateAsync(DbUserInfo dbUserInfo, int id);
+    Task<DbUserInfo> GetByIdAsync(int id);
+    Task<DbUserInfo> GetByUsernameAsync(string username);
 }

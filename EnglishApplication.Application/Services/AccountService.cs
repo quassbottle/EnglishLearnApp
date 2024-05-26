@@ -24,11 +24,11 @@ public class AccountService(IAccountRepository repository, IJwtTokenService jwtT
 
     public async Task<AccountDto> CreateAsync(AccountDto dto)
     {
-        var candidate = await repository.CreateAsync(new Account
+        var candidate = await repository.CreateAsync(new DbAccount
         {
             Email = dto.Email,
             HashedPassword = dto.HashedPassword,
-            UserInfo = new UserInfo
+            DbUserInfo = new DbUserInfo
             {
                 Username = dto.Username
             }

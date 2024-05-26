@@ -23,22 +23,22 @@ public class UserInfoRepository(DefaultDataContext context) : IUserInfoRepositor
         return candidate is not null;
     }
 
-    public async Task<UserInfo> UpdateAsync(UserInfo userInfo, int id)
+    public async Task<DbUserInfo> UpdateAsync(DbUserInfo dbUserInfo, int id)
     {
         if (!await ExistsByIdAsync(id))
         {
             throw UserNotFoundException.WithSuchId(id);
         }
 
-        userInfo.Id = id;
-        var result = context.UserInfos.Update(userInfo);
+        dbUserInfo.Id = id;
+        var result = context.UserInfos.Update(dbUserInfo);
         
         await context.SaveChangesAsync();
         
         return result.Entity;
     }
 
-    public async Task<UserInfo> GetByIdAsync(int id)
+    public async Task<DbUserInfo> GetByIdAsync(int id)
     {
         var candidate = await context.UserInfos
             .AsNoTracking()
@@ -47,7 +47,7 @@ public class UserInfoRepository(DefaultDataContext context) : IUserInfoRepositor
         return candidate;
     }
 
-    public async Task<UserInfo> GetByUsernameAsync(string username)
+    public async Task<DbUserInfo> GetByUsernameAsync(string username)
     {
         var candidate = await context.UserInfos
             .AsNoTracking()

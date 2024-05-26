@@ -7,16 +7,16 @@ namespace EnglishApplication.Infrastructure.Repositories;
 
 public class SessionRepository(DefaultDataContext context) : ISessionRepository
 {
-    public async Task<Session> CreateAsync(Session session)
+    public async Task<DbSession> CreateAsync(DbSession dbSession)
     {
-        var result = await context.Sessions.AddAsync(session);
+        var result = await context.Sessions.AddAsync(dbSession);
         
         await context.SaveChangesAsync();
 
         return result.Entity;
     }
 
-    public async Task<Session> GetByIdAsync(int id)
+    public async Task<DbSession> GetByIdAsync(int id)
     {
         var candidate = await context.Sessions
             .AsNoTracking()
@@ -25,10 +25,10 @@ public class SessionRepository(DefaultDataContext context) : ISessionRepository
         return candidate;
     }
 
-    public async Task<Session> UpdateAsync(Session session, int id)
+    public async Task<DbSession> UpdateAsync(DbSession dbSession, int id)
     {
-        session.Id = id;
-        var result = context.Sessions.Update(session);
+        dbSession.Id = id;
+        var result = context.Sessions.Update(dbSession);
         
         await context.SaveChangesAsync();
         

@@ -9,7 +9,7 @@ namespace EnglishApplication.Infrastructure.Repositories;
 
 public class AccountRepository(DefaultDataContext context) : IAccountRepository
 {
-    public async Task<Account> GetByIdAsync(int id)
+    public async Task<DbAccount> GetByIdAsync(int id)
     {
         var candidate = await context.Accounts
             .AsNoTracking()
@@ -23,29 +23,29 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         return candidate;
     }
 
-    public async Task<Account> CreateAsync(Account account)
+    public async Task<DbAccount> CreateAsync(DbAccount dbAccount)
     {
-        if (await ExistsByEmailAsync(account.Email))
+        if (await ExistsByEmailAsync(dbAccount.Email))
         {
-            throw AccountAlreadyExistsException.WithSuchEmail(account.Email);
+            throw AccountAlreadyExistsException.WithSuchEmail(dbAccount.Email);
         }
 
-        var result = await context.Accounts.AddAsync(account);
+        var result = await context.Accounts.AddAsync(dbAccount);
         
         await context.SaveChangesAsync();
 
         return result.Entity;
     }
 
-    public async Task<Account> UpdateAsync(Account account, int id)
+    public async Task<DbAccount> UpdateAsync(DbAccount dbAccount, int id)
     {
         if (!await ExistsByIdAsync(id))
         {
             throw AccountNotFoundException.WithSuchId(id);
         }
 
-        account.Id = id;
-        var result = context.Accounts.Update(account);
+        dbAccount.Id = id;
+        var result = context.Accounts.Update(dbAccount);
         
         await context.SaveChangesAsync();
         
@@ -59,7 +59,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
             throw AccountNotFoundException.WithSuchId(id);
         }
         
-        context.Accounts.Remove(new Account { Id = id });
+        context.Accounts.Remove(new DbAccount { Id = id });
         
         await context.SaveChangesAsync();
     }
@@ -82,7 +82,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         return candidate is not null;
     }
 
-    public async Task<Account> FirstOrDefaultAsync(Expression<Func<Account, bool>> predicate)
+    public async Task<DbAccount> FirstOrDefaultAsync(Expression<Func<DbAccount, bool>> predicate)
     {
         return await context.Accounts
             .AsNoTracking()

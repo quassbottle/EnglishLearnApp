@@ -4,7 +4,7 @@ namespace EnglishApplication.Application.Dto.Mappers;
 
 public static class AccountMapper
 {
-    public static AccountDto ToDto(this Account? account)
+    public static AccountDto ToDto(this DbAccount? account)
     {
         return account is null ?
             null :
@@ -12,7 +12,7 @@ public static class AccountMapper
         {
             Email = account.Email,
             Id = account.Id,
-            Username = account.UserInfo?.Username,
+            Username = account.DbUserInfo?.Username,
             HashedPassword = account.HashedPassword
         };
     }

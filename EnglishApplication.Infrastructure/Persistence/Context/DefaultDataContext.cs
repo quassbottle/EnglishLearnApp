@@ -23,13 +23,14 @@ public class DefaultDataContext(IDbConnectionFactory factory) : DbContext
         modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
         modelBuilder.ApplyConfiguration(new WordConfiguration());
         modelBuilder.ApplyConfiguration(new SessionConfiguration());
-
+        modelBuilder.ApplyConfiguration(new RoundConfiguration());
+        
         modelBuilder.SeedWords();
     }
 
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<LearnedWord> LearnedWords { get; set; }
-    public DbSet<UserInfo> UserInfos { get; set; }
-    public DbSet<Word> Words { get; set; }
-    public DbSet<Session> Sessions { get; set; }
+    public DbSet<DbAccount> Accounts { get; set; }
+    public DbSet<DbRound> Rounds { get; set; }
+    public DbSet<DbUserInfo> UserInfos { get; set; }
+    public DbSet<DbWord> Words { get; set; }
+    public DbSet<DbSession> Sessions { get; set; }
 }

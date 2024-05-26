@@ -4,19 +4,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishApplication.Infrastructure.Persistence.Configuration;
 
-public class SessionConfiguration : IEntityTypeConfiguration<Session>
+public class SessionConfiguration : IEntityTypeConfiguration<DbSession>
 {
-    public void Configure(EntityTypeBuilder<Session> builder)
+    public void Configure(EntityTypeBuilder<DbSession> builder)
     {        
-        builder.ToTable("Sessions");
+        builder.ToTable("session");
 
         builder.HasKey(e => e.Id);
-        builder.Property(e => e.Id).ValueGeneratedOnAdd();
-
-        builder.Property(e => e.StartTime).HasDefaultValue(DateTime.Now.ToUniversalTime());
         
-        builder
-            .HasMany(e => e.Words)
-            .WithOne(e => e.Session);
+        builder.Property(e => e.Id)
+            .HasColumnName("id")
+            .ValueGeneratedOnAdd();
+
+        builder.Property(e => e.UserInfoId)
+            .HasColumnName("user_info_id");
+
+        builder.HasMany(e => e.Rounds)
+            .WithOne(e => e.Session)
+            .HasForeignKey(e => e.SessionId);
     }
 }
