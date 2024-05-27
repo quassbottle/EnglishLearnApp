@@ -22,6 +22,15 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<DbUserInfo>
         builder.Property(e => e.AccountId)
             .HasColumnName("account_id");
 
+        builder.Property(e => e.LastSolved)
+            .HasColumnName("last_solved");
+
+        builder.Property(e => e.Points)
+            .HasColumnName("points");
+
+        builder.Property(e => e.Streak)
+            .HasColumnName("streak");
+
         builder.HasAlternateKey(e => e.Username);
 
         builder

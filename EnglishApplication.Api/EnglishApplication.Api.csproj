@@ -28,6 +28,7 @@
         <ProjectReference Include="..\EnglishApplication.Application\EnglishApplication.Application.csproj"/>
         <ProjectReference Include="..\EnglishApplication.Common\EnglishApplication.Common.csproj"/>
         <ProjectReference Include="..\EnglishApplication.Infrastructure\EnglishApplication.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EnglishApplication.Models\EnglishApplication.Models.csproj" />
     </ItemGroup>
 
 </Project>

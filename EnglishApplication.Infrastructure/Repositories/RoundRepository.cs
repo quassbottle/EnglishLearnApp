@@ -12,7 +12,6 @@ public class RoundRepository(DefaultDataContext context) : IRoundRepository
         round.Id = id;
 
         context.Rounds.Update(round);
-
         await context.SaveChangesAsync();
 
         return await GetByIdAsync(id);
@@ -29,13 +28,12 @@ public class RoundRepository(DefaultDataContext context) : IRoundRepository
         return candidate;
     }
 
-    public Task<DbRound> CreateAsync(DbRound round)
+    public async Task<DbRound> CreateAsync(DbRound round)
     {
-        throw new NotImplementedException();
-    }
+        var result = await context.Rounds.AddAsync(round);
 
-    public Task<ICollection<DbRound>> GetByRoundIdAsync(int id)
-    {
-        throw new NotImplementedException();
+        await context.SaveChangesAsync();
+
+        return result.Entity;
     }
 }

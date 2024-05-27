@@ -84,8 +84,8 @@ public class SessionRepository(DefaultDataContext context, IWordRepository wordR
     public async Task<DbSession> UpdateAsync(DbSession dbSession, int id)
     {
         dbSession.Id = id;
-        var result = context.Sessions.Update(dbSession);
-
+        
+        context.Sessions.Update(dbSession);
         await context.SaveChangesAsync();
 
         return await GetByIdAsync(id);

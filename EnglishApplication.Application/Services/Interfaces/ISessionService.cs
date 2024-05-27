@@ -11,4 +11,5 @@ public interface ISessionService
     Task<ICollection<RoundDto>> GetRoundsByIdAsync(int id);
     Task<SessionDto> CreateAsync(int userId);
     Task<SessionDto> GuessCurrentWordAsync(int sessionId, string word);
+    Task<SessionDto> AddRoundAsync(int sessionId, int userId);
 }

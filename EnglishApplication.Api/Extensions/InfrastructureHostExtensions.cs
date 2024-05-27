@@ -5,7 +5,7 @@ using EnglishApplication.Infrastructure.Persistence.Factories;
 using EnglishApplication.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnglishApplication.Infrastructure.Extensions;
+namespace EnglishApplication.Extensions;
 
 public static class InfrastructureHostExtensions
 {

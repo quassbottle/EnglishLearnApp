@@ -3,7 +3,7 @@ using EnglishApplication.Common.Authentication.Hash.Interfaces;
 using EnglishApplication.Common.Authentication.Jwt;
 using EnglishApplication.Common.Authentication.Jwt.Interfaces;
 
-namespace EnglishApplication.Common.Authentication.Extensions;
+namespace EnglishApplication.Extensions;
 
 public static class AuthenticationExtensions
 {

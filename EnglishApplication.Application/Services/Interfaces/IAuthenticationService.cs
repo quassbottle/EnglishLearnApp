@@ -1,10 +1,9 @@
 using EnglishApplication.Application.Dto;
-using EnglishApplication.Models.Auth.Request;
 
 namespace EnglishApplication.Application.Services.Interfaces;
 
 public interface IAuthenticationService
 {
-    Task<TokenDto> RegisterAsync(RegisterRequest request);
-    Task<TokenDto> LoginAsync(LoginRequest request);
+    Task<TokenDto> RegisterAsync(string email, string username, string password);
+    Task<TokenDto> LoginAsync(string login, string password);
 }

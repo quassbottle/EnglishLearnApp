@@ -1,8 +1,6 @@
-using EnglishApplication.Application.Extensions;
-using EnglishApplication.Common.Authentication.Extensions;
 using EnglishApplication.Extensions;
-using EnglishApplication.Infrastructure.Extensions;
 using EnglishApplication.Infrastructure.Persistence.Context;
+using EnglishApplication.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +17,8 @@ builder.Services.AddJwtAuth(builder.Configuration);
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+
 var app = builder.Build();
 
 app.MigrateDatabase<DefaultDataContext>();
@@ -27,6 +27,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseAuthorization();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

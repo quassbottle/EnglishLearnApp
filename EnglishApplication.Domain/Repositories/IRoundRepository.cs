@@ -6,4 +6,5 @@ public interface IRoundRepository
 {
     Task<DbRound> UpdateAsync(DbRound round, int id);
     Task<DbRound> GetByIdAsync(int id);
+    Task<DbRound> CreateAsync(DbRound round);
 }

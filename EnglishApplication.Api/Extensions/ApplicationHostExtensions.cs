@@ -1,7 +1,7 @@
 using EnglishApplication.Application.Services;
 using EnglishApplication.Application.Services.Interfaces;
 
-namespace EnglishApplication.Application.Extensions;
+namespace EnglishApplication.Extensions;
 
 public static class ApplicationHostExtensions
 {

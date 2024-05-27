@@ -12,7 +12,9 @@ public class AuthController(IAuthenticationService authService) : ApiControllerV
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var result = await authService.LoginAsync(request);
+        var (email, password) = request;
+        
+        var result = await authService.LoginAsync(email, password);
 
         return Ok(result);
     }
@@ -20,7 +22,9 @@ public class AuthController(IAuthenticationService authService) : ApiControllerV
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var result = await authService.RegisterAsync(request);
+        var (email, username, password) = request;
+        
+        var result = await authService.RegisterAsync(email, username, password);
 
         return Ok(result);
     }

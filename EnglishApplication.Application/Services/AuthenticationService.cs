@@ -2,7 +2,7 @@ using System.Security.Claims;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Common.Authentication.Hash.Interfaces;
-using EnglishApplication.Models.Auth.Request;
+using EnglishApplication.Domain.Exceptions.Auth;
 
 namespace EnglishApplication.Application.Services;
 
@@ -11,38 +11,38 @@ public class AuthenticationService(
     IPasswordHasher passwordHasher,
     IJwtTokenService jwtService) : IAuthenticationService
 {
-    public async Task<TokenDto> RegisterAsync(RegisterRequest request)
+    public async Task<TokenDto> RegisterAsync(string email, string username, string password)
     {
-        var hashedPassword = passwordHasher.Hash(request.Password);
+        var hashedPassword = passwordHasher.Hash(password);
 
         var candidate = await accountService.CreateAsync(new AccountDto
         {
-            Email = request.Email,
+            Email = email,
             HashedPassword = hashedPassword,
-            Username = request.Username
+            Username = username
         });
 
         var token = await jwtService.CreateAccessTokenAsync(new List<Claim>
         {
-            new("email", request.Email),
-            new("role", "default"), // todo: add roles
+            new("email", email),
+            new("role", "default"),
             new("id", candidate.Id.ToString())
         });
 
         return token;
     }
 
-    public async Task<TokenDto> LoginAsync(LoginRequest request)
+    public async Task<TokenDto> LoginAsync(string email, string password)
     {
-        var candidate = await accountService.GetByEmailAsync(request.Email);
+        var candidate = await accountService.GetByEmailAsync(email);
 
-        if (!passwordHasher.Verify(request.Password, candidate.HashedPassword))
-            throw new Exception("bad password"); // todo: create domain specified exception
+        if (!passwordHasher.Verify(password, candidate.HashedPassword))
+            throw new BadPasswordException();
 
         var token = await jwtService.CreateAccessTokenAsync(new List<Claim>
         {
-            new("email", request.Email),
-            new("role", "default"), // todo: add roles
+            new("email", email),
+            new("role", "default"), 
             new("id", candidate.Id.ToString())
         });
 
