@@ -10,7 +10,7 @@ public abstract class BaseAuthController : ControllerBase
 {
     private string AuthHeader => HttpContext.Request.Headers.Authorization.ToString();
 
-    protected int Id => int.Parse(JwtReader.GetId(AuthHeader));
+    protected int UserId => int.Parse(JwtReader.GetId(AuthHeader));
     protected string Role => JwtReader.GetRole(AuthHeader);
     protected string Email => JwtReader.GetEmail(AuthHeader);
 }

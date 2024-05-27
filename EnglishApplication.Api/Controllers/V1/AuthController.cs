@@ -9,6 +9,11 @@ namespace EnglishApplication.Controllers.V1;
 [AllowAnonymous]
 public class AuthController(IAuthenticationService authService) : ApiControllerV1
 {
+    /// <summary>
+    /// Log in account
+    /// </summary>
+    /// <param name="request">Log in params</param>
+    /// <returns></returns>
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
@@ -19,6 +24,11 @@ public class AuthController(IAuthenticationService authService) : ApiControllerV
         return Ok(result);
     }
 
+    /// <summary>
+    /// Register an account
+    /// </summary>
+    /// <param name="request">Register params</param>
+    /// <returns></returns>
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
