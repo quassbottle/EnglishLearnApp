@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Common.Authentication.Jwt.Interfaces;
@@ -18,7 +15,7 @@ public class JwtTokenService(IJwtSettings jwtSettings) : IJwtTokenService
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
 
         var expires = DateTime.UtcNow.AddHours(jwtSettings.TokenExpiresAfterHours);
-        
+
         var token = new JwtSecurityToken(
             jwtSettings.Issuer,
             jwtSettings.Audience,

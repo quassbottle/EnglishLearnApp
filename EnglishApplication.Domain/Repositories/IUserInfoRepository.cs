@@ -9,4 +9,5 @@ public interface IUserInfoRepository
     Task<DbUserInfo> UpdateAsync(DbUserInfo dbUserInfo, int id);
     Task<DbUserInfo> GetByIdAsync(int id);
     Task<DbUserInfo> GetByUsernameAsync(string username);
+    Task<int> GetGuessedTimesAsync(int id);
 }

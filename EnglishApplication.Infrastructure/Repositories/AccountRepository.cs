@@ -13,54 +13,44 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
     {
         var candidate = await context.Accounts
             .AsNoTracking()
+            .Include(a => a.UserInfo)
             .FirstOrDefaultAsync(a => a.Id == id);
-        
-        if (candidate is null)
-        {
-            throw AccountNotFoundException.WithSuchId(id);
-        }
+
+        if (candidate is null) throw AccountNotFoundException.WithSuchId(id);
 
         return candidate;
     }
 
-    public async Task<DbAccount> CreateAsync(DbAccount dbAccount)
+    public async Task<DbAccount?> CreateAsync(DbAccount? dbAccount)
     {
         if (await ExistsByEmailAsync(dbAccount.Email))
-        {
             throw AccountAlreadyExistsException.WithSuchEmail(dbAccount.Email);
-        }
 
         var result = await context.Accounts.AddAsync(dbAccount);
-        
+
         await context.SaveChangesAsync();
 
         return result.Entity;
     }
 
-    public async Task<DbAccount> UpdateAsync(DbAccount dbAccount, int id)
+    public async Task<DbAccount?> UpdateAsync(DbAccount? dbAccount, int id)
     {
-        if (!await ExistsByIdAsync(id))
-        {
-            throw AccountNotFoundException.WithSuchId(id);
-        }
+        if (!await ExistsByIdAsync(id)) throw AccountNotFoundException.WithSuchId(id);
 
         dbAccount.Id = id;
         var result = context.Accounts.Update(dbAccount);
-        
+
         await context.SaveChangesAsync();
-        
+
         return result.Entity;
     }
 
     public async Task RemoveAsync(int id)
     {
-        if (!await ExistsByIdAsync(id))
-        {
-            throw AccountNotFoundException.WithSuchId(id);
-        }
-        
+        if (!await ExistsByIdAsync(id)) throw AccountNotFoundException.WithSuchId(id);
+
         context.Accounts.Remove(new DbAccount { Id = id });
-        
+
         await context.SaveChangesAsync();
     }
 
@@ -69,7 +59,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         var candidate = await context.Accounts
             .AsNoTracking()
             .FirstOrDefaultAsync(account => account.Email == email);
-        
+
         return candidate is not null;
     }
 
@@ -78,14 +68,27 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         var candidate = await context.Accounts
             .AsNoTracking()
             .FirstOrDefaultAsync(account => account.Id == id);
-        
+
         return candidate is not null;
     }
 
-    public async Task<DbAccount> FirstOrDefaultAsync(Expression<Func<DbAccount, bool>> predicate)
+    public async Task<DbAccount?> FirstOrDefaultAsync(Expression<Func<DbAccount?, bool>> predicate)
     {
         return await context.Accounts
             .AsNoTracking()
             .FirstOrDefaultAsync(predicate);
+    }
+
+    public Task<int> GetGuessedTimesByWordIdAsync(int userId, int wordId)
+    {
+        var candidate = context.Rounds
+            .AsNoTracking()
+            .Include(r => r.Session)
+            .Where(r => r.Session.UserInfoId == userId)
+            .Where(r => r.Guessed ?? false)
+            .Include(r => r.Word)
+            .Count(r => r.WordId == wordId);
+
+        return Task.FromResult(candidate);
     }
 }

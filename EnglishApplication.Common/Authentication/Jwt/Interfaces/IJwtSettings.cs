@@ -1,6 +1,3 @@
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-
 namespace EnglishApplication.Common.Authentication.Jwt.Interfaces;
 
 public interface IJwtSettings

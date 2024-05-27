@@ -11,7 +11,7 @@ public class WordConfiguration : IEntityTypeConfiguration<DbWord>
         builder.ToTable("word");
 
         builder.HasKey(e => e.Id);
-        
+
         builder.Property(e => e.Id)
             .HasColumnName("id")
             .ValueGeneratedOnAdd();

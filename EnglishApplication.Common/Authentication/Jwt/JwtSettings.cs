@@ -1,4 +1,3 @@
-using System.Text;
 using EnglishApplication.Common.Authentication.Jwt.Interfaces;
 using Microsoft.Extensions.Configuration;
 
@@ -20,7 +19,8 @@ public class JwtSettings(IConfiguration configuration) : IJwtSettings
         get
         {
             var jwt = configuration.GetSection("Jwt");
-            return jwt["Audience"] ?? throw new ArgumentException("Invalid Jwt Audience");;
+            return jwt["Audience"] ?? throw new ArgumentException("Invalid Jwt Audience");
+            ;
         }
     }
 
@@ -38,12 +38,9 @@ public class JwtSettings(IConfiguration configuration) : IJwtSettings
         get
         {
             var jwt = configuration.GetSection("Jwt");
-            
-            if (jwt["TokenExpiresInHours"] is null)
-            {
-                throw new ArgumentException("Invalid Jwt TokenExpiresInHours");
-            }
-            
+
+            if (jwt["TokenExpiresInHours"] is null) throw new ArgumentException("Invalid Jwt TokenExpiresInHours");
+
             return int.Parse(jwt["TokenExpiresInHours"]!);
         }
     }
@@ -53,12 +50,10 @@ public class JwtSettings(IConfiguration configuration) : IJwtSettings
         get
         {
             var jwt = configuration.GetSection("Jwt");
-            
+
             if (jwt["RefreshTokenExpiresInHours"] is null)
-            {
                 throw new ArgumentException("Invalid Jwt RefreshTokenExpiresInHours");
-            }
-            
+
             return int.Parse(jwt["RefreshTokenExpiresInHours"]!);
         }
     }

@@ -1,6 +1,24 @@
 version: '3.3'
 services:
-  employees.application:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PASS}
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 15672:15672
+    logging:
+      driver: none
+    networks:
+      - backend
+
+  backend:
     image: engishapp.api
     build:
       context: .
@@ -8,6 +26,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:
+      - rabbitmq
       - database
     networks:
       - backend

@@ -1,8 +1,5 @@
-using System.Security.Claims;
-using System.Threading.Tasks;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Models.Auth.Request;
-using EnglishApplication.Models.Auth.Response;
 
 namespace EnglishApplication.Application.Services.Interfaces;
 

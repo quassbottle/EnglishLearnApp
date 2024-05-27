@@ -1,7 +1,5 @@
 using EnglishApplication.Application.Services;
 using EnglishApplication.Application.Services.Interfaces;
-using EnglishApplication.Common.Authentication.Jwt;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EnglishApplication.Application.Extensions;
 
@@ -12,5 +10,6 @@ public static class ApplicationHostExtensions
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<ISessionService, SessionService>();
     }
 }

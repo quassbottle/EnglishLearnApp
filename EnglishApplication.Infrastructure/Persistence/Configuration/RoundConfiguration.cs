@@ -17,8 +17,7 @@ public class RoundConfiguration : IEntityTypeConfiguration<DbRound>
             .ValueGeneratedOnAdd();
 
         builder.Property(e => e.StartTime)
-            .HasColumnName("start_time")
-            .HasDefaultValue(DateTime.Now);
+            .HasColumnName("start_time");
 
         builder.Property(e => e.EndTime)
             .HasColumnName("end_time");

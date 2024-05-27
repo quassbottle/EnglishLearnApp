@@ -30,7 +30,7 @@ public static class JwtReader
 
     public static List<Claim> GetClaims(int id, string email, string role)
     {
-        var claims = new List<Claim>()
+        var claims = new List<Claim>
         {
             new("id", id.ToString()),
             new("email", email),

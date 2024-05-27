@@ -11,7 +11,7 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<DbUserInfo>
         builder.ToTable("user_info");
 
         builder.HasKey(e => e.Id);
-        
+
         builder.Property(e => e.Id)
             .HasColumnName("id")
             .ValueGeneratedOnAdd();
@@ -26,6 +26,6 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<DbUserInfo>
 
         builder
             .HasMany(e => e.Sessions)
-            .WithOne(e => e.DbUserInfo);
+            .WithOne(e => e.UserInfo);
     }
 }

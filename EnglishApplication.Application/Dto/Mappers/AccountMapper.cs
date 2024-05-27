@@ -6,14 +6,14 @@ public static class AccountMapper
 {
     public static AccountDto ToDto(this DbAccount? account)
     {
-        return account is null ?
-            null :
-            new AccountDto
-        {
-            Email = account.Email,
-            Id = account.Id,
-            Username = account.DbUserInfo?.Username,
-            HashedPassword = account.HashedPassword
-        };
+        return account is null
+            ? null
+            : new AccountDto
+            {
+                Email = account.Email,
+                Id = account.Id,
+                Username = account.UserInfo?.Username,
+                HashedPassword = account.HashedPassword
+            };
     }
 }

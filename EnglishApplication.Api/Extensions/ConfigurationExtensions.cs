@@ -28,7 +28,7 @@ public static class ConfigurationExtensions
                 };
             });
     }
-    
+
     public static void AddSwaggerWithAuth(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>

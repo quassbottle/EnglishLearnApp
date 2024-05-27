@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Dto.Mappers;
 using EnglishApplication.Application.Services.Interfaces;
@@ -10,14 +9,20 @@ namespace EnglishApplication.Application.Services;
 
 public class AccountService(IAccountRepository repository, IJwtTokenService jwtTokenService) : IAccountService
 {
+    public async Task<AccountDto> GetByIdAsync(int id)
+    {
+        var candidate = await repository.GetByIdAsync(id);
+
+        if (candidate is null) throw AccountNotFoundException.WithSuchId(id);
+
+        return candidate.ToDto();
+    }
+
     public async Task<AccountDto> GetByEmailAsync(string email)
     {
         var candidate = await repository.FirstOrDefaultAsync(acc => acc.Email == email);
 
-        if (candidate is null)
-        {
-            throw AccountNotFoundException.WithSuchEmail(email);
-        }
+        if (candidate is null) throw AccountNotFoundException.WithSuchEmail(email);
 
         return candidate.ToDto();
     }
@@ -28,7 +33,7 @@ public class AccountService(IAccountRepository repository, IJwtTokenService jwtT
         {
             Email = dto.Email,
             HashedPassword = dto.HashedPassword,
-            DbUserInfo = new DbUserInfo
+            UserInfo = new DbUserInfo
             {
                 Username = dto.Username
             }

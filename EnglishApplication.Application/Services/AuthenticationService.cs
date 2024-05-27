@@ -37,10 +37,8 @@ public class AuthenticationService(
         var candidate = await accountService.GetByEmailAsync(request.Email);
 
         if (!passwordHasher.Verify(request.Password, candidate.HashedPassword))
-        {
             throw new Exception("bad password"); // todo: create domain specified exception
-        }
-        
+
         var token = await jwtService.CreateAccessTokenAsync(new List<Claim>
         {
             new("email", request.Email),

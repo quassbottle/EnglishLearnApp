@@ -16,7 +16,7 @@ public class AuthController(IAuthenticationService authService) : ApiControllerV
 
         return Ok(result);
     }
-    
+
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {

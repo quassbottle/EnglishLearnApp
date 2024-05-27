@@ -1,7 +1,7 @@
 using EnglishApplication.Application.Extensions;
 using EnglishApplication.Common.Authentication.Extensions;
-using EnglishApplication.Infrastructure.Extensions;
 using EnglishApplication.Extensions;
+using EnglishApplication.Infrastructure.Extensions;
 using EnglishApplication.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -7,9 +7,8 @@ public static class WordsInitializer
 {
     public static void SeedWords(this ModelBuilder modelBuilder)
     {
-        
-        modelBuilder.Entity<DbWord>().HasData(new List<DbWord>()
-            {
+        modelBuilder.Entity<DbWord>().HasData(new List<DbWord>
+        {
             new() { Id = 1, English = "word", Russian = "слово" },
             new() { Id = 2, English = "house", Russian = "дом" },
             new() { Id = 3, English = "cat", Russian = "кот" },
