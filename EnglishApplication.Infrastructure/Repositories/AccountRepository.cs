@@ -16,10 +16,19 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
             .Include(a => a.UserInfo)
             .FirstOrDefaultAsync(a => a.Id == id);
 
-        if (candidate is null) throw AccountNotFoundException.WithSuchId(id);
+        return candidate;
+    }
+    
+    public async Task<DbAccount> GetByEmailAsync(string email)
+    {
+        var candidate = await context.Accounts
+            .AsNoTracking()
+            .Include(a => a.UserInfo)
+            .FirstOrDefaultAsync(a => a.Email == email);
 
         return candidate;
     }
+
 
     public async Task<DbAccount?> CreateAsync(DbAccount? dbAccount)
     {
@@ -70,13 +79,6 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
             .FirstOrDefaultAsync(account => account.Id == id);
 
         return candidate is not null;
-    }
-
-    public async Task<DbAccount?> FirstOrDefaultAsync(Expression<Func<DbAccount?, bool>> predicate)
-    {
-        return await context.Accounts
-            .AsNoTracking()
-            .FirstOrDefaultAsync(predicate);
     }
 
     public Task<int> GetGuessedTimesByWordIdAsync(int userId, int wordId)

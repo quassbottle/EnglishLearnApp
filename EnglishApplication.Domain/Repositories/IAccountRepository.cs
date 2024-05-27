@@ -11,6 +11,6 @@ public interface IAccountRepository
     Task RemoveAsync(int id);
     Task<bool> ExistsByEmailAsync(string email);
     Task<bool> ExistsByIdAsync(int id);
-    Task<DbAccount?> FirstOrDefaultAsync(Expression<Func<DbAccount?, bool>> predicate);
+    Task<DbAccount> GetByEmailAsync(string email);
     Task<int> GetGuessedTimesByWordIdAsync(int userId, int wordId);
 }

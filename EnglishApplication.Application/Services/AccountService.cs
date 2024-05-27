@@ -7,7 +7,7 @@ using EnglishApplication.Domain.Repositories;
 
 namespace EnglishApplication.Application.Services;
 
-public class AccountService(IAccountRepository repository, IJwtTokenService jwtTokenService) : IAccountService
+public class AccountService(IAccountRepository repository) : IAccountService
 {
     public async Task<AccountDto> GetByIdAsync(int id)
     {
@@ -20,8 +20,8 @@ public class AccountService(IAccountRepository repository, IJwtTokenService jwtT
 
     public async Task<AccountDto> GetByEmailAsync(string email)
     {
-        var candidate = await repository.FirstOrDefaultAsync(acc => acc.Email == email);
-
+        var candidate = await repository.GetByEmailAsync(email);
+        
         if (candidate is null) throw AccountNotFoundException.WithSuchEmail(email);
 
         return candidate.ToDto();
