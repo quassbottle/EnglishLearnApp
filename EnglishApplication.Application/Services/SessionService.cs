@@ -1,6 +1,8 @@
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Dto.Mappers;
+using EnglishApplication.Application.RabbitMq.Messages;
 using EnglishApplication.Application.Services.Interfaces;
+using EnglishApplication.Common.RabbitMQ.Interfaces;
 using EnglishApplication.Domain.Entities;
 using EnglishApplication.Domain.Exceptions.Round;
 using EnglishApplication.Domain.Exceptions.Session;
@@ -11,7 +13,8 @@ namespace EnglishApplication.Application.Services;
 public class SessionService(ISessionRepository sessionRepository,
     IWordRepository wordRepository,
     IRoundRepository roundRepository,
-    IUserInfoRepository userInfoRepository) : ISessionService
+    IUserInfoRepository userInfoRepository,
+    IRabbitMqProducer<SessionNextRoundMessage> nextRoundProducer) : ISessionService
 {
     private const int PointsPerAnswer = 100;
     
@@ -62,6 +65,11 @@ public class SessionService(ISessionRepository sessionRepository,
             throw new SessionActiveAlreadyExistsException();
 
         var candidate = await sessionRepository.CreateAsync(userId);
+
+        await nextRoundProducer.SendAsync(new SessionNextRoundMessage
+        {
+            SessionId = candidate.Id
+        });
 
         return candidate.ToDto();
     }

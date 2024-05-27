@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerWithAuth();
 
 builder.Services.AddAuthModule();
+builder.Services.AddRabbitMq();
 builder.Services.AddJwtAuth(builder.Configuration);
 
 builder.Services.AddInfrastructure();

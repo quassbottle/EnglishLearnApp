@@ -1,18 +1,23 @@
 version: '3.3'
 services:
   rabbitmq:
-    image: rabbitmq:3.13-management
+    image: rabbitmq
+    build:
+      context: ./infrastructure/images/rabbitmq
+      dockerfile: Dockerfile
     container_name: rabbitmq
     hostname: rabbitmq
     restart: always
     environment:
-      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_HOME=./infrastructure/data/rabbitmq
+      - RABBITMQ_DEFAULT_USER=english
       - RABBITMQ_DEFAULT_PASS=password
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648
     volumes:
-      - ./rabbitmq:/var/lib/rabbitmq
+      - ./infrastructure/data/rabbitmq:/var/lib/rabbitmq
     ports:
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     logging:
       driver: none
     networks:
@@ -53,11 +58,8 @@ services:
     ports:
       - "50000:5432"
     volumes:
-      - database-pg:/var/lib/postgresql/data
+      - ./infrastructure/data/postgresql:/var/lib/postgresql/data
 
 networks:
   backend:
     driver: bridge
-
-volumes:
-  database-pg:
