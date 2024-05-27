@@ -8,6 +8,7 @@ public class AccountDto
     public string Email { get; set; }
     public string Username { get; set; }
     public int Points { get; set; }
+    public int Streak { get; set; }
     public DateTime? LastSolved { get; set; }
     
     

@@ -12,8 +12,11 @@ public static class AccountMapper
             {
                 Email = account.Email,
                 Id = account.Id,
-                Username = account.UserInfo?.Username,
-                HashedPassword = account.HashedPassword
+                Username = account.UserInfo.Username,
+                HashedPassword = account.HashedPassword,
+                Streak = account.UserInfo.Streak,
+                LastSolved = account.UserInfo.LastSolved,
+                Points = account.UserInfo.Points
             };
     }
 }
