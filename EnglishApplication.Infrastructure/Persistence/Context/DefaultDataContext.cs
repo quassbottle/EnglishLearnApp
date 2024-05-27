@@ -17,6 +17,7 @@ public class DefaultDataContext(IDbConnectionFactory factory) : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(factory.CreateAsync().GetAwaiter().GetResult());
+        optionsBuilder.EnableSensitiveDataLogging();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

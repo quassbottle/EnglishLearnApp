@@ -12,4 +12,5 @@ public interface ISessionService
     Task<SessionDto> CreateAsync(int userId);
     Task<SessionDto> GuessCurrentWordAsync(int sessionId, string word);
     Task<SessionDto> AddRoundAsync(int sessionId, int userId);
+    Task<SessionDto> MoveNextRoundAsync(int sessionId);
 }

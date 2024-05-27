@@ -20,7 +20,8 @@ public class RoundConfiguration : IEntityTypeConfiguration<DbRound>
             .HasColumnName("start_time");
 
         builder.Property(e => e.EndTime)
-            .HasColumnName("end_time");
+            .HasColumnName("end_time")
+            .IsRequired(false);
 
         builder.Property(e => e.WordId)
             .HasColumnName("word_id");

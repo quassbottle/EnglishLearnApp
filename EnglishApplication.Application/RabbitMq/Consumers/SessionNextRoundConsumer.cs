@@ -1,36 +1,29 @@
-using EnglishApplication.Common.RabbitMQ.Interfaces;
+using System.Text.Json;
+using EnglishApplication.Application.RabbitMq.Messages;
+using EnglishApplication.Application.Services.Interfaces;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using RabbitMQ.Client;
+using Microsoft.Extensions.Logging;
 
 namespace EnglishApplication.Application.RabbitMq.Consumers;
 
-public class SessionNextRoundConsumer : BackgroundService
+public class SessionNextRoundConsumer(IBusRegistrationContext busContext, ILogger<SessionNextRoundConsumer> logger) : IConsumer<SessionNextRoundMessage>
 {
-    private readonly IConnection _connection;
-    private readonly IModel _channel;
-    
-    public SessionNextRoundConsumer(IServiceProvider serviceProvider)
+    public async Task Consume(ConsumeContext<SessionNextRoundMessage> context)
     {
-        using var scope = serviceProvider.CreateScope();
-        var factory = scope.ServiceProvider.GetRequiredService<IRabbitMqConnectionFactory>().CreateInstance();
+        using var scope = busContext.CreateScope();
 
-        _connection = factory.CreateConnection();
-        _channel = _connection.CreateModel();
+        var service = scope.ServiceProvider.GetRequiredService<ISessionService>();
         
-        _channel.QueueDeclare()
-    }
-    
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        Console.WriteLine("test");
-    }
+        var session = await service.GetByIdAsync(context.Message.SessionId);
+        var currentRound = await service.GetCurrentRoundAsync(session.Id);
 
-    public override void Dispose()
-    {
-        _channel.Close();
-        _connection.Close();
-        
-        base.Dispose();
-    }
+        if (currentRound.Id == context.Message.CurrentRoundId)
+        {
+            await service.MoveNextRoundAsync(session.Id);
+            
+            logger.LogInformation($"Session {session.Id} is moving to the next round");
+        }
+
+    } 
 }

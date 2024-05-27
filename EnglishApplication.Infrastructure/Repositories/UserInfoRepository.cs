@@ -27,11 +27,14 @@ public class UserInfoRepository(DefaultDataContext context) : IUserInfoRepositor
     {
         if (!await ExistsByIdAsync(id)) throw UserNotFoundException.WithSuchId(id);
 
+        await using var transaction = await context.Database.BeginTransactionAsync();
+        
         dbUserInfo.Id = id;
         var result = context.UserInfos.Update(dbUserInfo);
 
         await context.SaveChangesAsync();
-
+        await transaction.CommitAsync();
+        
         return result.Entity;
     }
 

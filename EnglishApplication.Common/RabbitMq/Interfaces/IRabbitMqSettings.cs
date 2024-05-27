@@ -6,4 +6,5 @@ public interface IRabbitMqSettings
     public string User { get; }
     public string Password { get; }
     public int Port { get; }
+    public string SessionNextRoundQueue { get; }
 }

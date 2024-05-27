@@ -52,4 +52,16 @@ public class RabbitMqSettings(IConfiguration configuration) : IRabbitMqSettings
             return int.Parse(section["Port"]!);
         }
     }
+
+    public string SessionNextRoundQueue 
+    {
+        get
+        {
+            var section = configuration.GetSection("RabbitMq");
+
+            if (section["SessionNextRoundQueue"] is null) throw new ArgumentException("Invalid RabbitMq SessionNextRoundQueue");
+
+            return section["SessionNextRoundQueue"]!;
+        }
+    }
 }

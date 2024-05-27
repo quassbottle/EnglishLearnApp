@@ -20,7 +20,6 @@ public class SessionRepository(DefaultDataContext context, IWordRepository wordR
                     new()
                     {
                         StartTime = startTime,
-                        EndTime = startTime.AddSeconds(30),
                         WordId = (await wordRepository.GetRandomNotGuessedWordAsync(userId)).Id
                     }
                 }
@@ -85,8 +84,12 @@ public class SessionRepository(DefaultDataContext context, IWordRepository wordR
     {
         dbSession.Id = id;
         
+        await using var transaction = await context.Database.BeginTransactionAsync();
+
         context.Sessions.Update(dbSession);
         await context.SaveChangesAsync();
+
+        await transaction.CommitAsync();
 
         return await GetByIdAsync(id);
     }

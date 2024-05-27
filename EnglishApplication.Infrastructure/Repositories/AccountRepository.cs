@@ -46,11 +46,15 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
     {
         if (!await ExistsByIdAsync(id)) throw AccountNotFoundException.WithSuchId(id);
 
+        await using var transaction = await context.Database.BeginTransactionAsync();
+
         dbAccount.Id = id;
         var result = context.Accounts.Update(dbAccount);
 
         await context.SaveChangesAsync();
 
+        await transaction.CommitAsync();
+        
         return result.Entity;
     }
 

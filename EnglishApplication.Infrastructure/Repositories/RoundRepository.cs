@@ -11,8 +11,12 @@ public class RoundRepository(DefaultDataContext context) : IRoundRepository
     {
         round.Id = id;
 
+        await using var transaction = await context.Database.BeginTransactionAsync();
+
         context.Rounds.Update(round);
         await context.SaveChangesAsync();
+
+        await transaction.CommitAsync();
 
         return await GetByIdAsync(id);
     }
