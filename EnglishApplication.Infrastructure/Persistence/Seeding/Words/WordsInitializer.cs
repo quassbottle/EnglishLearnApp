@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnglishApplication.Infrastructure.Persistence.Seeding.Words;
 
+/// <summary>
+/// Инициализатор слов для заполнения базы данных.
+/// </summary>
 public static class WordsInitializer
 {
+    /// <summary>
+    /// Заполняет базу данных словами.
+    /// </summary>
+    /// <param name="modelBuilder">Построитель моделей данных.</param>
     public static void SeedWords(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DbWord>().HasData(new List<DbWord>

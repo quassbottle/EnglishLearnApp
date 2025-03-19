@@ -14,13 +14,15 @@ public static class SessionModelMapper
                 Id = dto.Id,
                 Active = dto.Active,
                 GuessedTimes = dto.Rounds is null ? 0 : dto.Rounds.Count(r => r.Guessed.GetValueOrDefault()),
-                Rounds = dto.Rounds is null ? null : dto.Rounds.Select(r => new SessionRound
-                {
-                    StartTime = r.StartTime,
-                    EndTime = r.EndTime,
-                    Guessed = r.Guessed,
-                    Word = r.Word.English
-                }).ToList()
+                Rounds = dto.Rounds is null
+                    ? null
+                    : dto.Rounds.Select(r => new SessionRound
+                    {
+                        StartTime = r.StartTime,
+                        EndTime = r.EndTime,
+                        Guessed = r.Guessed,
+                        Word = r.Word.English
+                    }).ToList()
             };
     }
 }

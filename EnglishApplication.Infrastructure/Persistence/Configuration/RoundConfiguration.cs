@@ -4,8 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishApplication.Infrastructure.Persistence.Configuration;
 
+/// <summary>
+/// Конфигурация сущности раунда для Entity Framework Core.
+/// </summary>
 public class RoundConfiguration : IEntityTypeConfiguration<DbRound>
 {
+    /// <summary>
+    /// Настраивает сущность раунда для хранения в базе данных.
+    /// </summary>
     public void Configure(EntityTypeBuilder<DbRound> builder)
     {
         builder.ToTable("round");

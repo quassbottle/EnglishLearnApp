@@ -2,10 +2,13 @@ using EnglishApplication.Domain.Entities;
 
 namespace EnglishApplication.Domain.Repositories;
 
+/// <summary>
+/// Представляет интерфейс репозитория для работы со словами.
+/// </summary>
 public interface IWordRepository
 {
-    Task<DbWord> GetByIdAsync(int id);
-    Task<DbWord> GetByValueAsync(string word);
-    Task<DbWord> GetByTranslationAsync(string word);
+    /// <summary>
+    /// Получает случайное слово, которое еще не было угадано пользователем.
+    /// </summary>
     Task<DbWord> GetRandomNotGuessedWordAsync(int userId);
 }

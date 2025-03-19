@@ -2,12 +2,13 @@ using EnglishApplication.Domain.Entities;
 
 namespace EnglishApplication.Domain.Repositories;
 
+/// <summary>
+/// Представляет интерфейс репозитория для работы с информацией о пользователях.
+/// </summary>
 public interface IUserInfoRepository
 {
-    Task<bool> ExistsByUsernameAsync(string username);
-    Task<bool> ExistsByIdAsync(int id);
+    /// <summary>
+    /// Обновляет информацию о пользователе.
+    /// </summary>
     Task<DbUserInfo> UpdateAsync(DbUserInfo dbUserInfo, int id);
-    Task<DbUserInfo> GetByIdAsync(int id);
-    Task<DbUserInfo> GetByUsernameAsync(string username);
-    Task<int> GetGuessedTimesAsync(int id);
 }

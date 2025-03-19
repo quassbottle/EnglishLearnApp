@@ -42,7 +42,7 @@ public class AuthenticationService(
         var token = await jwtService.CreateAccessTokenAsync(new List<Claim>
         {
             new("email", email),
-            new("role", "default"), 
+            new("role", "default"),
             new("id", candidate.Id.ToString())
         });
 

@@ -4,8 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishApplication.Infrastructure.Persistence.Configuration;
 
+/// <summary>
+/// Конфигурация сущности сессии для Entity Framework Core.
+/// </summary>
 public class SessionConfiguration : IEntityTypeConfiguration<DbSession>
 {
+    /// <summary>
+    /// Настраивает сущность сессии для хранения в базе данных.
+    /// </summary>
     public void Configure(EntityTypeBuilder<DbSession> builder)
     {
         builder.ToTable("session");

@@ -2,7 +2,6 @@ using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Dto.Mappers;
 using EnglishApplication.Application.RabbitMq.Messages;
 using EnglishApplication.Application.Services.Interfaces;
-using EnglishApplication.Common.RabbitMQ.Interfaces;
 using EnglishApplication.Domain.Entities;
 using EnglishApplication.Domain.Exceptions.Round;
 using EnglishApplication.Domain.Exceptions.Session;
@@ -20,7 +19,7 @@ public class SessionService(ISessionRepository sessionRepository,
     private const int PointsPerAnswer = 100;
     private const int Delay = 30000;
     private const int MaxRounds = 5;
-    
+
     public async Task<SessionDto> GetByIdAsync(int id)
     {
         var candidate = await sessionRepository.GetByIdAsync(id);
@@ -69,11 +68,9 @@ public class SessionService(ISessionRepository sessionRepository,
 
         var candidate = await sessionRepository.CreateAsync(userId);
         var currentRound = await GetCurrentRoundAsync(candidate.Id);
-        
-        bus.Publish(new SessionNextRoundMessage { SessionId = candidate.Id, CurrentRoundId = currentRound.Id }, context =>
-        {
-            context.Headers.Set("x-delay", Delay);
-        });
+
+        bus.Publish(new SessionNextRoundMessage { SessionId = candidate.Id, CurrentRoundId = currentRound.Id },
+            context => { context.Headers.Set("x-delay", Delay); });
 
         return candidate.ToDto();
     }
@@ -122,7 +119,7 @@ public class SessionService(ISessionRepository sessionRepository,
                 candidate.UserInfo.LastSolved = now.Date;
                 candidate.UserInfo.Streak = 0;
             }
-            
+
             candidate.UserInfo.Points += candidate.Rounds.Count(r => r.Guessed.GetValueOrDefault()) * PointsPerAnswer;
 
             await userInfoRepository.UpdateAsync(candidate.UserInfo, candidate.UserInfoId);
@@ -131,7 +128,7 @@ public class SessionService(ISessionRepository sessionRepository,
         }
 
         await sessionRepository.UpdateAsync(candidate, candidate.Id);
-        
+
         var addRound = await AddRoundAsync(sessionId, candidate.UserInfoId);
         var newRound = await GetCurrentRoundAsync(addRound.Id);
 
@@ -167,14 +164,14 @@ public class SessionService(ISessionRepository sessionRepository,
         var candidate = await sessionRepository.GetByIdAsync(sessionId);
 
         if (candidate is null) throw SessionNotFoundException.WithSuchId(sessionId);
-        
+
         var currentRound = await GetCurrentRoundAsync(sessionId);
-        
+
         var now = DateTime.Now.ToUniversalTime();
-        
+
         currentRound.Guessed = false;
         currentRound.EndTime = now;
-        
+
         candidate.Rounds = candidate.Rounds
             .Where(r => r.Id != currentRound.Id)
             .Append(currentRound.ToDb()).ToList();
@@ -203,23 +200,21 @@ public class SessionService(ISessionRepository sessionRepository,
                 candidate.UserInfo.LastSolved = now.Date;
                 candidate.UserInfo.Streak = 0;
             }
-            
+
             candidate.UserInfo.Points += candidate.Rounds.Count(r => r.Guessed.GetValueOrDefault()) * PointsPerAnswer;
 
             await userInfoRepository.UpdateAsync(candidate.UserInfo, candidate.UserInfoId);
-            
+
             return await GetByIdAsync(candidate.Id);
         }
-        
+
         await sessionRepository.UpdateAsync(candidate, candidate.Id);
-        
+
         var addRound = await AddRoundAsync(sessionId, candidate.UserInfoId);
         var newRound = await GetCurrentRoundAsync(addRound.Id);
-        
-        bus.Publish(new SessionNextRoundMessage { SessionId = candidate.Id, CurrentRoundId = newRound.Id }, context =>
-        {
-            context.Headers.Set("x-delay", Delay);
-        });
+
+        bus.Publish(new SessionNextRoundMessage { SessionId = candidate.Id, CurrentRoundId = newRound.Id },
+            context => { context.Headers.Set("x-delay", Delay); });
 
         return addRound;
     }

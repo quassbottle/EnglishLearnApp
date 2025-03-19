@@ -18,7 +18,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
 
         return candidate;
     }
-    
+
     public async Task<DbAccount> GetByEmailAsync(string email)
     {
         var candidate = await context.Accounts
@@ -30,7 +30,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
     }
 
 
-    public async Task<DbAccount?> CreateAsync(DbAccount? dbAccount)
+    public async Task<DbAccount> CreateAsync(DbAccount dbAccount)
     {
         if (await ExistsByEmailAsync(dbAccount.Email))
             throw AccountAlreadyExistsException.WithSuchEmail(dbAccount.Email);
@@ -42,7 +42,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         return result.Entity;
     }
 
-    public async Task<DbAccount?> UpdateAsync(DbAccount? dbAccount, int id)
+    public async Task<DbAccount> UpdateAsync(DbAccount dbAccount, int id)
     {
         if (!await ExistsByIdAsync(id)) throw AccountNotFoundException.WithSuchId(id);
 
@@ -54,7 +54,7 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         await context.SaveChangesAsync();
 
         await transaction.CommitAsync();
-        
+
         return result.Entity;
     }
 

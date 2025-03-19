@@ -8,27 +8,6 @@ namespace EnglishApplication.Infrastructure.Repositories;
 
 public class WordRepository(DefaultDataContext context) : IWordRepository
 {
-    public async Task<DbWord> GetByIdAsync(int id)
-    {
-        return await context.Words
-            .AsNoTracking()
-            .FirstOrDefaultAsync(w => w.Id == id);
-    }
-
-    public async Task<DbWord> GetByValueAsync(string word)
-    {
-        return await context.Words
-            .AsNoTracking()
-            .FirstOrDefaultAsync(w => w.English == word);
-    }
-
-    public async Task<DbWord> GetByTranslationAsync(string word)
-    {
-        return await context.Words
-            .AsNoTracking()
-            .FirstOrDefaultAsync(w => w.Russian == word);
-    }
-
     public async Task<DbWord> GetRandomNotGuessedWordAsync(int userId)
     {
         var wordGuesses = await context.Rounds

@@ -4,8 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishApplication.Infrastructure.Persistence.Configuration;
 
+/// <summary>
+/// Конфигурация сущности аккаунта для Entity Framework Core.
+/// </summary>
 public class AccountConfiguration : IEntityTypeConfiguration<DbAccount>
 {
+    /// <summary>
+    /// Настраивает сущность аккаунта для хранения в базе данных.
+    /// </summary>
     public void Configure(EntityTypeBuilder<DbAccount> builder)
     {
         builder.ToTable("account");

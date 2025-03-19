@@ -1,5 +1,5 @@
 using System.Data.Common;
-using EnglishApplication.Infrastructure.Persistence.Factories;
+using EnglishApplication.Infrastructure.Factories.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 

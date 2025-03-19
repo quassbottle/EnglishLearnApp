@@ -21,7 +21,7 @@ public class AccountService(IAccountRepository repository) : IAccountService
     public async Task<AccountDto> GetByEmailAsync(string email)
     {
         var candidate = await repository.GetByEmailAsync(email);
-        
+
         if (candidate is null) throw AccountNotFoundException.WithSuchEmail(email);
 
         return candidate.ToDto();

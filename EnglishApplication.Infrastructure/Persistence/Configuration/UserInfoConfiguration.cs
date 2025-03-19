@@ -4,8 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishApplication.Infrastructure.Persistence.Configuration;
 
+/// <summary>
+/// Конфигурация сущности информации о пользователе для Entity Framework Core.
+/// </summary>
 public class UserInfoConfiguration : IEntityTypeConfiguration<DbUserInfo>
 {
+    /// <summary>
+    /// Настраивает сущность информации о пользователе для хранения в базе данных.
+    /// </summary>
     public void Configure(EntityTypeBuilder<DbUserInfo> builder)
     {
         builder.ToTable("user_info");

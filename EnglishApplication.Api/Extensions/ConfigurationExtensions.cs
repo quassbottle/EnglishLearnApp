@@ -5,30 +5,18 @@ using Microsoft.OpenApi.Models;
 
 namespace EnglishApplication.Extensions;
 
+/// <summary>
+/// Расширения для конфигурации служб в приложении.
+/// </summary>
+/// <remarks>
+/// Этот класс содержит методы для добавления аутентификации JWT и настройки Swagger с поддержкой авторизации.
+/// </remarks>
 public static class ConfigurationExtensions
 {
-    public static void AddJwtAuth(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddAuthorization();
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                var authSettings = configuration.GetSection("Jwt");
-                options.ClaimsIssuer = authSettings["Issuer"];
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = authSettings["Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = authSettings["Audience"],
-                    ValidateLifetime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings["Key"])),
-                    ValidateIssuerSigningKey = true
-                };
-            });
-    }
-
+    /// <summary>
+    /// Добавляет поддержку Swagger с авторизацией в коллекцию сервисов.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
     public static void AddSwaggerWithAuth(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
@@ -36,13 +24,13 @@ public static class ConfigurationExtensions
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "English Application",
-                Description = "An application to learn english made for OOP classes",
+                Description = "Приложение для изучения английского языка, созданное для занятий по ООП",
                 Version = "1.3.3.7"
             });
 
             var schema = new OpenApiSecurityScheme
             {
-                Description = "Using the Authorization header with the Bearer scheme.",
+                Description = "Использование заголовка Authorization со схемой Bearer.",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,

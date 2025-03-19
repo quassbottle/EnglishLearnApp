@@ -83,7 +83,7 @@ public class SessionRepository(DefaultDataContext context, IWordRepository wordR
     public async Task<DbSession> UpdateAsync(DbSession dbSession, int id)
     {
         dbSession.Id = id;
-        
+
         await using var transaction = await context.Database.BeginTransactionAsync();
 
         context.Sessions.Update(dbSession);

@@ -10,10 +10,6 @@ namespace EnglishApplication.Controllers.V1;
 
 public class SessionController(ISessionService service) : ApiControllerV1
 {
-    /// <summary>
-    /// Begin the game session
-    /// </summary>
-    /// <returns></returns>
     [HttpPost("start")]
     public async Task<IActionResult> Start()
     {
@@ -22,10 +18,6 @@ public class SessionController(ISessionService service) : ApiControllerV1
         return Ok(dto.ToResponse());
     }
 
-    /// <summary>
-    /// Get current active game session by your profile
-    /// </summary>
-    /// <returns></returns>
     [HttpGet("active")]
     public async Task<IActionResult> GetActive()
     {
@@ -34,10 +26,6 @@ public class SessionController(ISessionService service) : ApiControllerV1
         return Ok(dto.ToResponse());
     }
 
-    /// <summary>
-    /// Guess the current word in your active session
-    /// </summary>
-    /// <returns></returns>
     [HttpPost("guess")]
     public async Task<IActionResult> Guess(GuessRequest request)
     {
