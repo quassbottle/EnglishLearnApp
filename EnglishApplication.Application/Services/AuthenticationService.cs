@@ -2,6 +2,7 @@ using System.Security.Claims;
 using EnglishApplication.Application.Dto;
 using EnglishApplication.Application.Services.Interfaces;
 using EnglishApplication.Common.Authentication.Hash.Interfaces;
+using EnglishApplication.Domain.Exceptions.Account;
 using EnglishApplication.Domain.Exceptions.Auth;
 
 namespace EnglishApplication.Application.Services;
@@ -13,8 +14,14 @@ public class AuthenticationService(
 {
     public async Task<TokenDto> RegisterAsync(string email, string username, string password)
     {
+        var exists = await accountService.GetByEmailAsync(email);
+        if (exists is not null)
+        {
+            throw AccountAlreadyExistsException.WithSuchEmail(email);
+        }
+     
         var hashedPassword = passwordHasher.Hash(password);
-
+   
         var candidate = await accountService.CreateAsync(new AccountDto
         {
             Email = email,
@@ -35,6 +42,11 @@ public class AuthenticationService(
     public async Task<TokenDto> LoginAsync(string email, string password)
     {
         var candidate = await accountService.GetByEmailAsync(email);
+
+        if (candidate is null)
+        {
+            throw AccountNotFoundException.WithSuchEmail(email);
+        }
 
         if (!passwordHasher.Verify(password, candidate.HashedPassword))
             throw new BadPasswordException();
