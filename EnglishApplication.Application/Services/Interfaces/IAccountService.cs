@@ -27,4 +27,6 @@ public interface IAccountService
     /// <param name="dto">DTO (Data Transfer Object) нового аккаунта.</param>
     /// <returns>DTO (Data Transfer Object) созданного аккаунта.</returns>
     Task<AccountDto> CreateAsync(AccountDto dto);
+
+    Task AssertEmailNotExistsAsync(string email);
 }

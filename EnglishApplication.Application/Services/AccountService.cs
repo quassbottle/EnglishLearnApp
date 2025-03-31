@@ -27,6 +27,15 @@ public class AccountService(IAccountRepository repository) : IAccountService
         return candidate.ToDto();
     }
 
+    public async Task AssertEmailNotExistsAsync(string email)
+    {
+        var candidate = await repository.GetByEmailAsync(email);
+        if (candidate is not null)
+        {
+            throw AccountAlreadyExistsException.WithSuchEmail(email);
+        }
+    }
+
     public async Task<AccountDto> CreateAsync(AccountDto dto)
     {
         var candidate = await repository.CreateAsync(new DbAccount

@@ -14,11 +14,7 @@ public class AuthenticationService(
 {
     public async Task<TokenDto> RegisterAsync(string email, string username, string password)
     {
-        var exists = await accountService.GetByEmailAsync(email);
-        if (exists is not null)
-        {
-            throw AccountAlreadyExistsException.WithSuchEmail(email);
-        }
+        await accountService.AssertEmailNotExistsAsync(email);
      
         var hashedPassword = passwordHasher.Hash(password);
    
@@ -42,11 +38,6 @@ public class AuthenticationService(
     public async Task<TokenDto> LoginAsync(string email, string password)
     {
         var candidate = await accountService.GetByEmailAsync(email);
-
-        if (candidate is null)
-        {
-            throw AccountNotFoundException.WithSuchEmail(email);
-        }
 
         if (!passwordHasher.Verify(password, candidate.HashedPassword))
             throw new BadPasswordException();
