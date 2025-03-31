@@ -15,6 +15,7 @@ public class AuthenticationService(
     public async Task<TokenDto> RegisterAsync(string email, string username, string password)
     {
         await accountService.AssertEmailNotExistsAsync(email);
+        await accountService.AssertUsernameNotExistsAsync(username)
      
         var hashedPassword = passwordHasher.Hash(password);
    

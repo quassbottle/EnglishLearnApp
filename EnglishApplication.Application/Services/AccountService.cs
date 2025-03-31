@@ -36,6 +36,15 @@ public class AccountService(IAccountRepository repository) : IAccountService
         }
     }
 
+    public async Task AssertUsernameNotExistsAsync(string username)
+    {
+        var candidate = await repository.GetByUsernameAsync(username);
+        if (candidate is not null)
+        {
+            throw new AccountAlreadyExistsException($"Account with username \"{username}\" already exists");
+        }
+    }
+
     public async Task<AccountDto> CreateAsync(AccountDto dto)
     {
         var candidate = await repository.CreateAsync(new DbAccount

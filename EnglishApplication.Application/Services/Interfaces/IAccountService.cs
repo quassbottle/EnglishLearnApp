@@ -29,4 +29,6 @@ public interface IAccountService
     Task<AccountDto> CreateAsync(AccountDto dto);
 
     Task AssertEmailNotExistsAsync(string email);
+    
+    Task AssertUsernameNotExistsAsync(string username);
 }

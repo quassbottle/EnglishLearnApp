@@ -41,6 +41,11 @@ public interface IAccountRepository
     /// Получает учетную запись по адресу электронной почты.
     /// </summary>
     Task<DbAccount> GetByEmailAsync(string email);
+    
+    /// <summary>
+    /// Получает учетную запись по логину.
+    /// </summary>
+    Task<DbAccount> GetByUsernameAsync(string username);
 
     /// <summary>
     /// Получает количество угаданных слов по идентификатору пользователя и слова.

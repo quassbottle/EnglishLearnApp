@@ -29,6 +29,16 @@ public class AccountRepository(DefaultDataContext context) : IAccountRepository
         return candidate;
     }
 
+    public async Task<DbAccount> GetByUsernameAsync(string username)
+    {
+        var candidate = await context.Accounts
+            .AsNoTracking()
+            .Include(a => a.UserInfo)
+            .FirstOrDefaultAsync(a => a.UserInfo.Username == username);
+
+        return candidate;
+    }
+
 
     public async Task<DbAccount> CreateAsync(DbAccount dbAccount)
     {
